@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
+import { useLuminariesData } from "../hooks/useLuminariesData";
 
 interface TeamMember {
   id: string;
@@ -288,15 +289,13 @@ export default function ModernLuminariesSection() {
   // Simple scroll effects
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1, 0.95]);
 
-  import { useLuminariesData } from "../hooks/useLuminariesData";
-
-const currentMembers = (() => {
+  // Use dynamic luminaries data from hook (fallback to local defaults)
   const { faculty: facultyFromHook, leadership: leadershipFromHook } = useLuminariesData();
-  if (activeGroup === "faculty") {
-    return facultyFromHook && facultyFromHook.length ? facultyFromHook : facultyMembers;
-  }
-  return leadershipFromHook && leadershipFromHook.length ? leadershipFromHook : leadershipMembers;
-})();
+
+  const currentMembers =
+    activeGroup === "faculty"
+      ? (facultyFromHook && facultyFromHook.length ? facultyFromHook : facultyMembers)
+      : (leadershipFromHook && leadershipFromHook.length ? leadershipFromHook : leadershipMembers);
 
   const MemberCard = ({
     member,
