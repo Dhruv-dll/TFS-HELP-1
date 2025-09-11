@@ -78,7 +78,7 @@
       ],
       "expertise": [
         "Accountancy",
-        "Finance", 
+        "Finance",
         "Digital Governance"
       ],
       "quote": "Digital governance in finance ensures transparency and efficiency in modern financial systems."
@@ -103,6 +103,18 @@
         "Corporate Compliance"
       ],
       "quote": "Understanding legal frameworks is essential for sound financial decision-making and corporate compliance."
+    },
+    {
+      "id": "faculty-1757600809665",
+      "name": "Fr. Ambrose Machado SJ",
+      "title": "Assitant Professor",
+      "bio": "Faculty at BAF department in St. Xaviers College",
+      "image": "",
+      "email": "Ambrose.Machado@xaivers.edu",
+      "linkedin": "",
+      "achievements": [],
+      "expertise": [],
+      "quote": ""
     }
   ],
   "leadership": [
@@ -189,5 +201,5 @@
       "isLeadership": true
     }
   ],
-  "lastModified": 1731334200000
+  "lastModified": 1757600810272
 }
