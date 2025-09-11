@@ -113,49 +113,20 @@ export function useEventsData() {
   // Load events data with server sync
   const loadEventsFromServer = async () => {
     try {
-      // Add timeout and error handling wrapper
-      const fetchWithTimeout = new Promise<Response>((resolve, reject) => {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => {
-          controller.abort();
-          reject(new Error("Request timeout"));
-        }, 8000);
-
-        fetch("/api/events", {
-          signal: controller.signal,
-          headers: {
-            Accept: "application/json",
-          },
-        })
-          .then((response) => {
-            clearTimeout(timeoutId);
-            resolve(response);
-          })
-          .catch((error) => {
-            clearTimeout(timeoutId);
-            reject(error);
-          });
-      });
-
-      const response = await fetchWithTimeout;
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000);
+      const response = await fetch("/api/events", { signal: controller.signal, headers: { Accept: "application/json" } });
+      clearTimeout(timeoutId);
       if (response.ok) {
         const result = await response.json();
         if (result.success && result.data) {
           setEventsConfig(result.data);
-          // Update local storage with server data
-          localStorage.setItem(
-            "tfs-events-config",
-            JSON.stringify(result.data),
-          );
           return true;
         }
       }
       throw new Error("Server request failed");
     } catch (error) {
-      console.warn(
-        "Failed to load events from server, using local/default data:",
-        error?.message || "Unknown error",
-      );
+      console.warn("Failed to load events from server, using default data:", error?.message || "Unknown error");
       return false;
     }
   };
