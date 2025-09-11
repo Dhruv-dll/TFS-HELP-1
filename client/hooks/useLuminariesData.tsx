@@ -221,17 +221,7 @@ export function useLuminariesData() {
   const [config, setConfig] = useState<LuminariesConfig>(defaultConfig);
   const [loading, setLoading] = useState(true);
 
-  const loadFromLocal = () => {
-    const saved = localStorage.getItem("tfs-luminaries-config");
-    if (!saved) return false;
-    try {
-      setConfig(JSON.parse(saved));
-      return true;
-    } catch {
-      setConfig(defaultConfig);
-      return false;
-    }
-  };
+  // Prefer server as single source of truth; remove localStorage usage
 
   const fetchWithTimeout = async (input: RequestInfo, init?: RequestInit, timeout = 8000) => {
     const controller = new AbortController();
