@@ -155,21 +155,10 @@ export function useEventsData() {
 
   useEffect(() => {
     const initializeEvents = async () => {
-      // First try to load from local storage
-      const loadedFromStorage = loadEventsConfig();
-
-      if (!loadedFromStorage) {
-        // No local data, load from server
-        const loadedFromServer = await loadEventsFromServer();
-        if (!loadedFromServer) {
-          // Fallback to default if server fails
-          setEventsConfig(defaultConfig);
-        }
-      } else {
-        // Have local data, check if server has updates
-        await checkServerSync();
+      const loadedFromServer = await loadEventsFromServer();
+      if (!loadedFromServer) {
+        setEventsConfig(defaultConfig);
       }
-
       setLoading(false);
     };
 
@@ -181,36 +170,15 @@ export function useEventsData() {
     return () => clearInterval(syncInterval);
   }, []);
 
-  // Listen for localStorage changes from admin panel
+  // Keep same-tab notifications for immediate UI updates
   useEffect(() => {
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === "tfs-events-config" && e.newValue) {
-        try {
-          const newConfig = JSON.parse(e.newValue);
-          setEventsConfig(newConfig);
-        } catch (error) {
-          console.warn("Failed to parse updated events config");
-        }
-      }
-    };
-
-    // Listen for storage events from other tabs/windows
-    window.addEventListener("storage", handleStorageChange);
-
-    // Also listen for custom events within the same tab
     const handleCustomStorageChange = () => {
-      loadEventsConfig();
+      // reload from server to reflect changes
+      loadEventsFromServer();
     };
 
     window.addEventListener("tfs-events-updated", handleCustomStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-      window.removeEventListener(
-        "tfs-events-updated",
-        handleCustomStorageChange,
-      );
-    };
+    return () => window.removeEventListener("tfs-events-updated", handleCustomStorageChange);
   }, []);
 
   // Helper function to get title from ID
