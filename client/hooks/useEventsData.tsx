@@ -134,36 +134,11 @@ export function useEventsData() {
   // Check if local data needs sync with server
   const checkServerSync = async () => {
     try {
-      const localConfig = localStorage.getItem("tfs-events-config");
-      const localLastModified = localConfig
-        ? JSON.parse(localConfig).lastModified || 0
-        : 0;
-
-      // Add timeout and comprehensive error handling
-      const fetchWithTimeout = new Promise<Response>((resolve, reject) => {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => {
-          controller.abort();
-          reject(new Error("Sync check timeout"));
-        }, 5000); // Shorter timeout for sync checks
-
-        fetch(`/api/events/sync?lastModified=${localLastModified}`, {
-          signal: controller.signal,
-          headers: {
-            Accept: "application/json",
-          },
-        })
-          .then((response) => {
-            clearTimeout(timeoutId);
-            resolve(response);
-          })
-          .catch((error) => {
-            clearTimeout(timeoutId);
-            reject(error);
-          });
-      });
-
-      const response = await fetchWithTimeout;
+      const localLastModified = eventsConfig.lastModified || 0;
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const response = await fetch(`/api/events/sync?lastModified=${localLastModified}`, { signal: controller.signal, headers: { Accept: "application/json" } });
+      clearTimeout(timeoutId);
       if (response.ok) {
         const result = await response.json();
         if (result.success && result.needsUpdate) {
@@ -172,17 +147,8 @@ export function useEventsData() {
         }
       }
     } catch (error) {
-      // Silently handle sync errors - don't log to avoid spam
-      // Only log if it's not a common network error
-      if (
-        error?.message &&
-        !error.message.includes("fetch") &&
-        !error.message.includes("timeout")
-      ) {
-        console.warn(
-          "Failed to check server sync:",
-          error?.message || "Unknown error",
-        );
+      if (error?.message && !error.message.includes("fetch") && !error.message.includes("timeout")) {
+        console.warn("Failed to check server sync:", error?.message || "Unknown error");
       }
     }
   };
