@@ -91,7 +91,6 @@ export function useSponsorsData() {
         const result = await res.json();
         if (result.success && result.data) {
           setConfig(result.data);
-          localStorage.setItem("tfs-sponsors-config", JSON.stringify(result.data));
           return true;
         }
       }
