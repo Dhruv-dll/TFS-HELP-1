@@ -13,7 +13,13 @@
       ]
     },
     "networking-events": {
-      "comingSoon": true
+      "comingSoon": false,
+      "events": [
+        {
+          "title": "asdasdad",
+          "description": "asdasd"
+        }
+      ]
     },
     "flagship-event": {
       "comingSoon": true
@@ -49,5 +55,5 @@
       }
     }
   ],
-  "lastModified": 1754368768214
+  "lastModified": 1757590671224
 }
