@@ -35,16 +35,7 @@
       "description": "Quality assurance and certification services provider supporting academic excellence standards.",
       "isActive": false,
       "website": "https://iqas.co.in"
-    },
-    {
-      "id": "sponsor-1763542653006",
-      "name": "ICICI Bank",
-      "logo": "https://ibb.co/Kxx7WvZD",
-      "industry": "Banking",
-      "description": "",
-      "website": "https://ibb.co/Kxx7WvZD",
-      "isActive": true
     }
   ],
-  "lastModified": 1763542653298
+  "lastModified": 1763542773092
 }
