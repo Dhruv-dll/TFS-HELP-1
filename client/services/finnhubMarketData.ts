@@ -1059,7 +1059,10 @@ class FinnhubMarketDataService {
 
       // Initial fetch with small delay and better error handling
       setTimeout(() => {
-        this.safeInitialUpdate();
+        this.safeInitialUpdate().catch((error) => {
+          console.warn("📊 Initial update error caught at top level:", error?.message || "Unknown error");
+          // Error is already handled in safeInitialUpdate, this is just a safety net
+        });
       }, 200); // Slightly longer delay
     }
 
