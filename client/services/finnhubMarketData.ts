@@ -147,6 +147,12 @@ class FinnhubMarketDataService {
     try {
       console.log("📊 Fetching enhanced market data from server...");
 
+      // If already in fallback mode from previous failures, skip server attempt
+      if (this.fallbackMode && this.apiFailureCount >= 5) {
+        console.log("🔄 Already in persistent fallback mode, using cached data");
+        return this.getFallbackMarketData();
+      }
+
       // Environment validation with better error handling
       try {
         if (typeof fetch === "undefined" || typeof window === "undefined") {
