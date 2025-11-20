@@ -467,7 +467,244 @@ export default function AdminEventsPanel({
             </div>
 
             <div className="space-y-8">
-              {activeSection === "sessions" ? (
+              {activeSection === "magazines" ? (
+                <>
+                  {/* Add New Magazine */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="bg-finance-navy/40 backdrop-blur-sm rounded-xl p-6 border border-finance-gold/20"
+                  >
+                    <div className="flex items-center space-x-3 mb-4">
+                      <BookOpen className="w-6 h-6 text-finance-gold" />
+                      <h3 className="text-xl font-bold text-finance-gold">
+                        Add Finsight Magazine
+                      </h3>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <Input
+                          placeholder="Magazine Title"
+                          value={newMagazine.title}
+                          onChange={(e) =>
+                            setNewMagazine((prev) => ({
+                              ...prev,
+                              title: e.target.value,
+                            }))
+                          }
+                          className="bg-finance-navy/50 border-finance-gold/20"
+                        />
+                        <Input
+                          placeholder="Edition (e.g., Volume 1, Issue 2)"
+                          value={newMagazine.edition}
+                          onChange={(e) =>
+                            setNewMagazine((prev) => ({
+                              ...prev,
+                              edition: e.target.value,
+                            }))
+                          }
+                          className="bg-finance-navy/50 border-finance-gold/20"
+                        />
+                      </div>
+
+                      <Input
+                        placeholder="Magazine Description"
+                        value={newMagazine.description}
+                        onChange={(e) =>
+                          setNewMagazine((prev) => ({
+                            ...prev,
+                            description: e.target.value,
+                          }))
+                        }
+                        className="bg-finance-navy/50 border-finance-gold/20"
+                      />
+
+                      <Input
+                        placeholder="Cover Image URL"
+                        value={newMagazine.cover}
+                        onChange={(e) =>
+                          setNewMagazine((prev) => ({
+                            ...prev,
+                            cover: e.target.value,
+                          }))
+                        }
+                        className="bg-finance-navy/50 border-finance-gold/20"
+                      />
+
+                      <Input
+                        placeholder="Magazine Link (PDF or external link)"
+                        value={newMagazine.link}
+                        onChange={(e) =>
+                          setNewMagazine((prev) => ({
+                            ...prev,
+                            link: e.target.value,
+                          }))
+                        }
+                        className="bg-finance-navy/50 border-finance-gold/20"
+                      />
+
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <Input
+                          type="number"
+                          placeholder="Number of Articles"
+                          value={newMagazine.articles}
+                          onChange={(e) =>
+                            setNewMagazine((prev) => ({
+                              ...prev,
+                              articles: parseInt(e.target.value) || 0,
+                            }))
+                          }
+                          className="bg-finance-navy/50 border-finance-gold/20"
+                        />
+                        <Input
+                          type="number"
+                          placeholder="Number of Downloads"
+                          value={newMagazine.downloads}
+                          onChange={(e) =>
+                            setNewMagazine((prev) => ({
+                              ...prev,
+                              downloads: parseInt(e.target.value) || 0,
+                            }))
+                          }
+                          className="bg-finance-navy/50 border-finance-gold/20"
+                        />
+                        <Input
+                          placeholder="Read Time (e.g., 15 min)"
+                          value={newMagazine.readTime}
+                          onChange={(e) =>
+                            setNewMagazine((prev) => ({
+                              ...prev,
+                              readTime: e.target.value,
+                            }))
+                          }
+                          className="bg-finance-navy/50 border-finance-gold/20"
+                        />
+                      </div>
+
+                      <Input
+                        placeholder="Categories (comma-separated, e.g., Finance, Banking, Crypto)"
+                        value={newMagazine.categories}
+                        onChange={(e) =>
+                          setNewMagazine((prev) => ({
+                            ...prev,
+                            categories: e.target.value,
+                          }))
+                        }
+                        className="bg-finance-navy/50 border-finance-gold/20"
+                      />
+
+                      <Input
+                        placeholder="Key Highlights (comma-separated, e.g., Market Analysis, Expert Views)"
+                        value={newMagazine.highlights}
+                        onChange={(e) =>
+                          setNewMagazine((prev) => ({
+                            ...prev,
+                            highlights: e.target.value,
+                          }))
+                        }
+                        className="bg-finance-navy/50 border-finance-gold/20"
+                      />
+
+                      <Button
+                        onClick={handleAddMagazine}
+                        className="bg-gradient-to-r from-finance-gold to-finance-electric text-finance-navy hover:scale-105 transition-transform w-full"
+                      >
+                        <Plus className="w-4 h-4 mr-2" />
+                        Add Magazine
+                      </Button>
+                    </div>
+                  </motion.div>
+
+                  {/* Current Magazines */}
+                  {magazines.length > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      className="bg-finance-navy/40 backdrop-blur-sm rounded-xl p-6 border border-finance-gold/20"
+                    >
+                      <h4 className="text-lg font-semibold text-finance-gold mb-4">
+                        Finsight Magazines ({magazines.length})
+                      </h4>
+                      <div className="space-y-3">
+                        {magazines.map((mag) => (
+                          <motion.div
+                            key={mag.id}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="bg-finance-navy/30 p-4 rounded-lg border border-finance-gold/10 hover:border-finance-gold/30 transition-colors"
+                          >
+                            <div className="flex gap-4 items-start">
+                              {mag.cover && (
+                                <img
+                                  src={mag.cover}
+                                  alt={mag.title}
+                                  className="w-16 h-24 rounded object-cover flex-shrink-0"
+                                  onError={(e) => {
+                                    (e.target as HTMLImageElement).style.display =
+                                      "none";
+                                  }}
+                                />
+                              )}
+                              <div className="flex-1 min-w-0">
+                                <div className="font-bold text-finance-gold text-lg">
+                                  {mag.title}
+                                </div>
+                                <div className="text-sm text-finance-teal mb-2">
+                                  {mag.edition}
+                                </div>
+                                {mag.description && (
+                                  <p className="text-sm text-foreground/70 mb-2 line-clamp-2">
+                                    {mag.description}
+                                  </p>
+                                )}
+                                <div className="flex flex-wrap gap-1 mb-2">
+                                  {mag.categories.slice(0, 3).map((cat, idx) => (
+                                    <span
+                                      key={idx}
+                                      className="text-xs bg-finance-navy px-2 py-1 rounded text-finance-teal border border-finance-teal/30"
+                                    >
+                                      {cat}
+                                    </span>
+                                  ))}
+                                </div>
+                                <div className="text-xs text-foreground/60 space-y-1">
+                                  <div>�� {mag.articles} Articles | 📥 {mag.downloads} Downloads | ⏱️ {mag.readTime}</div>
+                                  <div className="text-finance-teal">
+                                    <a
+                                      href={mag.link}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="hover:underline"
+                                    >
+                                      📎 View Magazine
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                              <Button
+                                onClick={() => removeMagazine(mag.id)}
+                                variant="destructive"
+                                size="sm"
+                                className="flex-shrink-0"
+                              >
+                                <X className="w-4 h-4" />
+                              </Button>
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {magazines.length === 0 && (
+                    <div className="text-center py-8 text-finance-gold/60">
+                      No magazines added yet. Add your first Finsight magazine above!
+                    </div>
+                  )}
+                </>
+              ) : activeSection === "sessions" ? (
                 <>
                   {/* Add New Session */}
                   <motion.div
