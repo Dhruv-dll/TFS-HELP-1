@@ -415,7 +415,7 @@ export default function AdminEventsPanel({
               <div className="flex bg-finance-navy/50 backdrop-blur-sm rounded-xl p-1 border border-finance-gold/20 flex-wrap justify-center gap-1">
                 <button
                   onClick={() => setActiveSection("events")}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  className={`px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
                     activeSection === "events"
                       ? "bg-finance-gold text-finance-navy"
                       : "text-finance-gold hover:bg-finance-gold/10"
@@ -425,7 +425,7 @@ export default function AdminEventsPanel({
                 </button>
                 <button
                   onClick={() => setActiveSection("sponsors")}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  className={`px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
                     activeSection === "sponsors"
                       ? "bg-finance-gold text-finance-navy"
                       : "text-finance-gold hover:bg-finance-gold/10"
@@ -435,17 +435,27 @@ export default function AdminEventsPanel({
                 </button>
                 <button
                   onClick={() => setActiveSection("sessions")}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  className={`px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
                     activeSection === "sessions"
                       ? "bg-finance-gold text-finance-navy"
                       : "text-finance-gold hover:bg-finance-gold/10"
                   }`}
                 >
-                  Conclave Sessions
+                  Sessions
+                </button>
+                <button
+                  onClick={() => setActiveSection("magazines")}
+                  className={`px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
+                    activeSection === "magazines"
+                      ? "bg-finance-gold text-finance-navy"
+                      : "text-finance-gold hover:bg-finance-gold/10"
+                  }`}
+                >
+                  Magazines
                 </button>
                 <button
                   onClick={() => setActiveSection("luminaries")}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  className={`px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
                     activeSection === "luminaries"
                       ? "bg-finance-gold text-finance-navy"
                       : "text-finance-gold hover:bg-finance-gold/10"
