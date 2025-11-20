@@ -322,6 +322,55 @@ export default function AdminEventsPanel({
     }
   };
 
+  const handleAddMagazine = () => {
+    if (
+      newMagazine.title.trim() &&
+      newMagazine.edition.trim() &&
+      newMagazine.cover.trim() &&
+      newMagazine.link.trim()
+    ) {
+      const categoriesArray = newMagazine.categories
+        .split(",")
+        .map((c) => c.trim())
+        .filter(Boolean);
+
+      const highlightsArray = newMagazine.highlights
+        .split(",")
+        .map((h) => h.trim())
+        .filter(Boolean);
+
+      addMagazine({
+        title: newMagazine.title,
+        edition: newMagazine.edition,
+        description: newMagazine.description,
+        cover: newMagazine.cover,
+        articles: newMagazine.articles,
+        downloads: newMagazine.downloads,
+        readTime: newMagazine.readTime,
+        categories: categoriesArray,
+        highlights: highlightsArray,
+        link: newMagazine.link,
+      });
+
+      setNewMagazine({
+        title: "",
+        edition: "",
+        description: "",
+        cover: "",
+        articles: 0,
+        downloads: 0,
+        readTime: "",
+        categories: "",
+        highlights: "",
+        link: "",
+      });
+
+      alert("Magazine added successfully!");
+    } else {
+      alert("Please fill in title, edition, cover image URL, and magazine link.");
+    }
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
