@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export interface Speaker {
   id: string;
@@ -34,6 +34,7 @@ export function useConclaveSessionsData() {
   const [sessionsConfig, setSessionsConfig] =
     useState<SessionsConfig>(defaultConfig);
   const [loading, setLoading] = useState(true);
+  const lastSaveTimeRef = useRef<number>(0);
 
   // Load sessions data with server sync
   const loadSessionsFromServer = async () => {
@@ -62,8 +63,13 @@ export function useConclaveSessionsData() {
     }
   };
 
-  // Check if local data needs sync with server
+  // Check if local data needs sync with server (but not immediately after save)
   const checkServerSync = async () => {
+    // Skip sync check for 5 seconds after a save to prevent reverting user changes
+    if (Date.now() - lastSaveTimeRef.current < 5000) {
+      return;
+    }
+
     try {
       const localLastModified = sessionsConfig.lastModified || 0;
       const controller = new AbortController();
@@ -130,58 +136,47 @@ export function useConclaveSessionsData() {
     try {
       newConfig.lastModified = Date.now();
 
-      // Update local state immediately
-      setSessionsConfig(newConfig);
-
-      // Sync with server with proper error handling
+      // Sync with server BEFORE updating local state
       try {
-        const fetchWithTimeout = new Promise<Response>((resolve, reject) => {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => {
-            controller.abort();
-            reject(new Error("Save request timeout"));
-          }, 10000);
-
-          fetch("/api/sessions", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify({ data: newConfig }),
-            signal: controller.signal,
-          })
-            .then((response) => {
-              clearTimeout(timeoutId);
-              resolve(response);
-            })
-            .catch((error) => {
-              clearTimeout(timeoutId);
-              reject(error);
-            });
+        const response = await fetch("/api/sessions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({ data: newConfig }),
         });
 
-        const response = await fetchWithTimeout;
-        if (response.ok) {
-          console.log("Sessions data synced with server successfully");
-        } else {
-          console.warn(
-            "Failed to sync sessions data with server - response not ok",
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(
+            errorData.message || "Failed to save sessions to server",
           );
         }
+
+        const result = await response.json();
+        if (!result.success) {
+          throw new Error(result.error || "Server returned failure response");
+        }
+
+        // Only update local state after successful server save
+        setSessionsConfig(newConfig);
+        lastSaveTimeRef.current = Date.now();
+        console.log("✅ Sessions data saved successfully to server");
       } catch (syncError) {
-        console.warn(
-          "Failed to sync sessions data with server:",
-          syncError?.message || "Unknown sync error",
+        console.error(
+          "❌ Failed to save sessions to server:",
+          syncError?.message || "Unknown error",
         );
+        throw syncError;
       }
 
       // Dispatch custom event to notify other components
       window.dispatchEvent(new CustomEvent("tfs-sessions-updated"));
     } catch (error) {
       console.error("Error saving sessions config:", error);
-      setSessionsConfig(newConfig);
-      window.dispatchEvent(new CustomEvent("tfs-sessions-updated"));
+      // Don't update local state if save failed
+      throw error;
     }
   };
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export interface Magazine {
   id: string;
@@ -27,6 +27,7 @@ const defaultConfig: MagazinesConfig = {
 export function useFinsightMagazines() {
   const [config, setConfig] = useState<MagazinesConfig>(defaultConfig);
   const [loading, setLoading] = useState(true);
+  const lastSaveTimeRef = useRef<number>(0);
 
   // Load magazines data with server sync
   const loadMagazinesFromServer = async () => {
@@ -55,8 +56,13 @@ export function useFinsightMagazines() {
     }
   };
 
-  // Check if local data needs sync with server
+  // Check if local data needs sync with server (but not immediately after save)
   const checkServerSync = async () => {
+    // Skip sync check for 5 seconds after a save to prevent reverting user changes
+    if (Date.now() - lastSaveTimeRef.current < 5000) {
+      return;
+    }
+
     try {
       const localLastModified = config.lastModified || 0;
       const controller = new AbortController();
@@ -123,58 +129,47 @@ export function useFinsightMagazines() {
     try {
       newConfig.lastModified = Date.now();
 
-      // Update local state immediately
-      setConfig(newConfig);
-
-      // Sync with server with proper error handling
+      // Sync with server BEFORE updating local state
       try {
-        const fetchWithTimeout = new Promise<Response>((resolve, reject) => {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => {
-            controller.abort();
-            reject(new Error("Save request timeout"));
-          }, 10000);
-
-          fetch("/api/magazines", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify({ data: newConfig }),
-            signal: controller.signal,
-          })
-            .then((response) => {
-              clearTimeout(timeoutId);
-              resolve(response);
-            })
-            .catch((error) => {
-              clearTimeout(timeoutId);
-              reject(error);
-            });
+        const response = await fetch("/api/magazines", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({ data: newConfig }),
         });
 
-        const response = await fetchWithTimeout;
-        if (response.ok) {
-          console.log("Magazines data synced with server successfully");
-        } else {
-          console.warn(
-            "Failed to sync magazines data with server - response not ok",
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(
+            errorData.message || "Failed to save magazines to server",
           );
         }
+
+        const result = await response.json();
+        if (!result.success) {
+          throw new Error(result.error || "Server returned failure response");
+        }
+
+        // Only update local state after successful server save
+        setConfig(newConfig);
+        lastSaveTimeRef.current = Date.now();
+        console.log("✅ Magazines data saved successfully to server");
       } catch (syncError) {
-        console.warn(
-          "Failed to sync magazines data with server:",
-          syncError?.message || "Unknown sync error",
+        console.error(
+          "❌ Failed to save magazines to server:",
+          syncError?.message || "Unknown error",
         );
+        throw syncError;
       }
 
       // Dispatch custom event to notify other components
       window.dispatchEvent(new CustomEvent("tfs-magazines-updated"));
     } catch (error) {
       console.error("Error saving magazines config:", error);
-      setConfig(newConfig);
-      window.dispatchEvent(new CustomEvent("tfs-magazines-updated"));
+      // Don't update local state if save failed
+      throw error;
     }
   };
 
