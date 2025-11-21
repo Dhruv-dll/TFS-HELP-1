@@ -289,14 +289,64 @@ export default function SponsorsSection() {
               </div>
             </motion.div>
           ) : (
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto"
-              layout
-            >
-              {filteredSponsors.map((sponsor, index) => (
-                <SponsorCard key={sponsor.id} sponsor={sponsor} index={index} />
-              ))}
-            </motion.div>
+            <div>
+              {/* Associate Sponsors Row - Only shown for current sponsors without search */}
+              {activeTab === "current" && searchTerm === "" && associateSponsors.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.8, delay: 0.7 }}
+                  className="mb-16"
+                >
+                  <h3 className="text-center text-2xl font-bold text-finance-gold mb-8">
+                    Associate Sponsors
+                  </h3>
+                  <motion.div
+                    className="flex flex-col md:flex-row justify-center gap-8 max-w-5xl mx-auto"
+                    layout
+                  >
+                    {associateSponsors.map((sponsor, index) => (
+                      <div key={sponsor.id} className="flex-1">
+                        <SponsorCard sponsor={sponsor} index={index} size="large" />
+                      </div>
+                    ))}
+                  </motion.div>
+                </motion.div>
+              )}
+
+              {/* Other Sponsors Grid */}
+              {activeTab === "current" && searchTerm === "" && otherCurrentSponsors.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.8, delay: 0.8 }}
+                >
+                  <h3 className="text-center text-2xl font-bold text-finance-gold mb-8">
+                    Other Sponsors
+                  </h3>
+                  <motion.div
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
+                    layout
+                  >
+                    {otherCurrentSponsors.map((sponsor, index) => (
+                      <SponsorCard key={sponsor.id} sponsor={sponsor} index={index} />
+                    ))}
+                  </motion.div>
+                </motion.div>
+              )}
+
+              {/* Past Sponsors Grid or Filtered Results */}
+              {(activeTab === "past" || searchTerm !== "") && filteredSponsors.length > 0 && (
+                <motion.div
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto"
+                  layout
+                >
+                  {filteredSponsors.map((sponsor, index) => (
+                    <SponsorCard key={sponsor.id} sponsor={sponsor} index={index} />
+                  ))}
+                </motion.div>
+              )}
+            </div>
           )}
 
           {filteredSponsors.length === 0 && searchTerm !== "" && (
