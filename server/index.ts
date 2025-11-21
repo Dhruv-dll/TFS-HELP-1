@@ -2,11 +2,8 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import path from "path";
-import { fileURLToPath } from "url";
 import { handleDemo } from "./routes/demo";
 import { getMarketData } from "./routes/marketData";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export function createServer() {
   const app = express();
@@ -16,8 +13,9 @@ export function createServer() {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  // Serve data folder as static files
-  const dataPath = path.resolve(__dirname, "../data");
+  // Serve data folder as static files - use absolute path from root
+  const dataPath = path.resolve(path.join(__dirname, "..", "data"));
+  console.log("📁 Serving data from:", dataPath);
   app.use("/data", express.static(dataPath));
 
   // Example API routes
