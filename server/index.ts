@@ -13,10 +13,13 @@ export function createServer() {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  // Serve data folder as static files - use absolute path from root
-  const dataPath = path.resolve(path.join(__dirname, "..", "data"));
-  console.log("📁 Serving data from:", dataPath);
-  app.use("/data", express.static(dataPath));
+  // Serve data folder as static files
+  // Use the current directory and go up to reach data folder
+  app.use("/data", express.static("./data"));
+  app.get("/data/:filename", (req, res) => {
+    const filename = req.params.filename;
+    res.sendFile(path.resolve("./data", filename));
+  });
 
   // Example API routes
   app.get("/api/ping", (_req, res) => {
