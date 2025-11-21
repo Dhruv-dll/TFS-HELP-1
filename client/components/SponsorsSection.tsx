@@ -88,14 +88,24 @@ export default function SponsorsSection() {
     sponsor,
     index,
     size = "normal",
+    isFirstAssociate = false,
   }: {
     sponsor: Sponsor;
     index: number;
     size?: "normal" | "large";
+    isFirstAssociate?: boolean;
   }) => {
     const isLarge = size === "large";
-    const cardHeight = isLarge ? "h-80" : "h-64";
-    const logoSize = isLarge ? "w-64 h-32" : "w-52 h-20";
+    const cardHeight = isLarge
+      ? isFirstAssociate
+        ? "h-96"
+        : "h-80"
+      : "h-64";
+    const logoSize = isLarge
+      ? isFirstAssociate
+        ? "w-80 h-40"
+        : "w-64 h-32"
+      : "w-52 h-20";
 
     return (
       <motion.div
