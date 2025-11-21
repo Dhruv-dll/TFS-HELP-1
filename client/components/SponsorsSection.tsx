@@ -329,6 +329,7 @@ export default function SponsorsSection() {
                             sponsor={sponsor}
                             index={index}
                             size="large"
+                            isFirstAssociate={index === 0}
                           />
                         </div>
                       ))}
