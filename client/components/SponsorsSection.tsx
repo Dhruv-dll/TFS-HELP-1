@@ -336,7 +336,7 @@ export default function SponsorsSection() {
                     transition={{ duration: 0.8, delay: 0.8 }}
                   >
                     <h3 className="text-center text-2xl font-bold text-finance-gold mb-8">
-                      Other Sponsors
+                      Partner Sponsors
                     </h3>
                     <motion.div
                       className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
