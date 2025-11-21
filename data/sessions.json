@@ -59,7 +59,7 @@
           "name": "Mrs. Srishti Behl-Arya",
           "linkedinId": "https://www.linkedin.com/in/srishti-behl-825980107/",
           "photo": "https://media.licdn.com/dms/image/v2/C4E03AQFGCuQ0m35MEg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1609073909226?e=1765411200&v=beta&t=MthYbCAoDLxU9BhFN6CC3CYi9_AbKOxGy69UbCqty6o",
-          "bio": "Founder, Starfish Stories | Former CEO, Phantom Films | Former Director, International Original Films, Netflix India",
+          "bio": "Founder, Starfish Stories, Former CEO, Phantom Films, Former Director, International Original Films, Netflix India",
           "startTime": "11:45 AM",
           "endTime": "1:15 PM"
         },
@@ -86,20 +86,38 @@
       "isActive": true
     },
     {
-      "id": "session-investment-strategies",
-      "name": "Investment Strategies for Beginners",
-      "description": "Learn fundamental investment strategies and how to build a diversified portfolio",
-      "startTime": "4:00 PM",
-      "endTime": "5:30 PM",
+      "id": "session-3",
+      "name": "Sustainability Panel",
+      "description": "This session brings together three distinguished leaders who embody the evolving landscape of sustainability, CSR, and ESG in India. Representing diverse sectors including financial services, automotive, and large-scale corporate leadership, they bring a combined experience of over 50 years in sustainability strategy, impact creation, ESG reporting, corporate responsibility, culture-building, and organisational transformation.",
+      "startTime": "2:15 PM",
+      "endTime": "3:45 PM",
       "speakers": [
         {
-          "id": "speaker-amit-patel",
-          "name": "Amit Patel",
-          "linkedinId": "amit-patel-investor",
-          "photo": "https://raw.githubusercontent.com/Dhruv-dll/TFS_Final_3/refs/heads/main/Icons/placeholder-speaker.jpg",
-          "bio": "Certified Financial Planner and investment advisor with focus on retail investors",
-          "startTime": "4:00 PM",
-          "endTime": "5:30 PM"
+          "id": "speaker-8",
+          "name": "Ms. Gazala Shaikh",
+          "linkedinId": "https://www.linkedin.com/in/gazala-shaikh-b6915046/",
+          "photo": "https://media.licdn.com/dms/image/v2/D4D03AQGmgc1GAqfTZQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1729309964649?e=1765411200&v=beta&t=3E42UQWbOJxpR7aAOXgO56O6Cjn9b0Qf-mdaLi4q6qI",
+          "bio": "Head ESG, L&T Finance Sustainability, ESG, CSR, Business Impact Leader",
+          "startTime": "2:15 PM",
+          "endTime": "3:45 PM"
+        },
+        {
+          "id": "speaker-9",
+          "name": "Mr. Avilash Dwivedi",
+          "linkedinId": "linkedin.com/in/avilashdwivedi",
+          "photo": "https://media.licdn.com/dms/image/v2/C5103AQE7z20VRtqTwg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1584122185721?e=1765411200&v=beta&t=dANejGeyiu9JsfVYrAtkTLpMMdgLk2sRwgXcgWglDW4",
+          "bio": "Head-CSR at Mahindra and Mahindra Ltd II Ex Tata II Ex Vedanta II Ex IMA Dehradun",
+          "startTime": "2:15 PM",
+          "endTime": "3:45 PM"
+        },
+        {
+          "id": "speaker-10",
+          "name": "Mr. Hemant Punamiya",
+          "linkedinId": "https://www.linkedin.com/in/hemant-punamiya/",
+          "photo": "https://media.licdn.com/dms/image/v2/D4D03AQEqUn0K_lnFLA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1676781114364?e=1765411200&v=beta&t=VYhdxCQ-tR9wKXHOmHFCQLYkuEfOf4m0QXqVO0wuFCw",
+          "bio": "ESG Strategy & Reporting | CSR Governance | M&A & IR | Pharma & FMCG",
+          "startTime": "2:15 PM",
+          "endTime": "3:45 PM"
         }
       ],
       "createdAt": 1757600810272,
