@@ -7,6 +7,7 @@ import MarketDataErrorBoundary, {
   NetworkStatusIndicator,
 } from "../components/MarketDataErrorBoundary";
 import MobileOptimizedEventsSection from "../components/MobileOptimizedEventsSection";
+import FlagshipConclaveSection from "../components/FlagshipConclaveSection";
 import AboutSection from "../components/AboutSection";
 import AboutBAFSection from "../components/AboutBAFSection";
 import ContactSection from "../components/ContactSection";
