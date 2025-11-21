@@ -6,12 +6,16 @@ export interface Speaker {
   linkedinId: string;
   photo: string;
   bio?: string;
+  startTime?: string;
+  endTime?: string;
 }
 
 export interface ConclaveSession {
   id: string;
   name: string;
   description?: string;
+  startTime?: string;
+  endTime?: string;
   speakers: Speaker[];
   createdAt: number;
 }
