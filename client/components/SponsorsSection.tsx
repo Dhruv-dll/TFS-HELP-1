@@ -85,10 +85,16 @@ export default function SponsorsSection() {
   const SponsorCard = ({
     sponsor,
     index,
+    size = "normal",
   }: {
     sponsor: Sponsor;
     index: number;
+    size?: "normal" | "large";
   }) => {
+    const isLarge = size === "large";
+    const cardHeight = isLarge ? "h-80" : "h-64";
+    const logoSize = isLarge ? "w-64 h-32" : "w-52 h-20";
+
     return (
       <motion.div
         initial={{ opacity: 0, y: 50, scale: 0.9 }}
@@ -97,7 +103,7 @@ export default function SponsorsSection() {
         className="relative group cursor-pointer"
       >
         <motion.div
-          className="relative h-64 overflow-hidden rounded-xl border border-finance-gold/20 bg-gradient-to-br from-finance-navy/50 to-finance-navy-light/30 backdrop-blur-xl"
+          className={`relative ${cardHeight} overflow-hidden rounded-xl border border-finance-gold/20 bg-gradient-to-br from-finance-navy/50 to-finance-navy-light/30 backdrop-blur-xl`}
           whileHover={{
             scale: 1.02,
             y: -5,
