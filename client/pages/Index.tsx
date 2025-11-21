@@ -13,10 +13,7 @@ import AboutBAFSection from "../components/AboutBAFSection";
 import ContactSection from "../components/ContactSection";
 import SponsorsSection from "../components/SponsorsSection";
 import FloatingMarketIcon from "../components/FloatingMarketIcon";
-import AdminEventsPanel from "../components/AdminEventsPanel";
-import AdminLogin from "../components/AdminLogin";
 import { EventPopupProvider } from "../hooks/useEventPopup";
-import { AuthProvider, useAuth } from "../hooks/useAuth";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
   Users,
@@ -73,7 +70,7 @@ export default function Index() {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.ctrlKey && event.altKey && event.key.toLowerCase() === "a") {
         event.preventDefault();
-        console.log("🔐 Admin panel shortcut triggered");
+        console.log("���� Admin panel shortcut triggered");
         setShowLoginPanel(true);
       }
     };
