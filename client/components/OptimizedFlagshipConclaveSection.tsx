@@ -30,7 +30,7 @@ const LazyImage = React.memo(
         onLoad={() => setLoaded(true)}
         onError={() => setError(true)}
         style={{
-          opacity: loaded ? 1 : 0,
+          opacity: loaded ? 1 : 0.5,
           transition: "opacity 0.3s ease-in-out",
         }}
       />
@@ -43,8 +43,8 @@ LazyImage.displayName = "LazyImage";
 export default function OptimizedFlagshipConclaveSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const { ref: inViewRef, inView } = useInView({
-    threshold: 0.3,
-    triggerOnce: true,
+    threshold: 0.1,
+    triggerOnce: false,
   });
 
   const { sessions, loading } = useConclaveSessionsData();
@@ -65,55 +65,15 @@ export default function OptimizedFlagshipConclaveSection() {
     }
   }, [inViewRef]);
 
-  // Memoize reduced animations for mobile
-  const getAnimationVariants = () => {
-    if (isMobile) {
-      return {
-        initial: { opacity: 0 },
-        animate: { opacity: 1 },
-        transition: { duration: 0.3 },
-      };
-    }
-    return {
-      initial: { opacity: 0, y: 30 },
-      animate: { opacity: 1, y: 0 },
-      transition: { duration: 0.6 },
-    };
-  };
-
-  const headerAnimationVariants = () => {
-    if (isMobile) {
-      return {
-        initial: { opacity: 0 },
-        animate: inView ? { opacity: 1 } : {},
-        transition: { duration: 0.3 },
-      };
-    }
-    return {
-      initial: { opacity: 0, y: -30 },
-      animate: inView ? { opacity: 1, y: 0 } : {},
-      transition: { duration: 0.8 },
-    };
-  };
-
-  const sessionAnimationVariants = (index: number) => {
-    if (isMobile) {
-      return {
-        initial: { opacity: 0 },
-        animate: inView ? { opacity: 1 } : {},
-        transition: { duration: 0.3, delay: Math.min(index * 0.05, 0.15) },
-      };
-    }
-    return {
-      initial: { opacity: 0, y: 50, scale: 0.9 },
-      animate: inView ? { opacity: 1, y: 0, scale: 1 } : {},
-      transition: {
-        duration: 0.6,
-        delay: index * 0.15,
-        ease: "easeOut",
-      },
-    };
-  };
+  if (loading || sessions.length === 0) {
+    return (
+      <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-gradient-to-b from-finance-navy to-finance-navy-light overflow-hidden">
+        <div className="container mx-auto text-center py-20">
+          <p className="text-foreground/60">Loading sessions...</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -130,30 +90,35 @@ export default function OptimizedFlagshipConclaveSection() {
 
       <div className="container mx-auto relative z-10" ref={containerRef}>
         {/* Section Header */}
-        {sessions.length > 0 && (
-          <motion.div
-            {...headerAnimationVariants()}
-            className="text-center mb-12 sm:mb-16"
-          >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white">
-              FLAGSHIP <span className="text-finance-teal">CONCLAVE</span>
-            </h2>
-            {!isMobile && (
-              <div className="w-32 h-1 bg-gradient-to-r from-finance-teal to-finance-mint mx-auto mb-6" />
-            )}
-            <p className="text-base sm:text-lg md:text-xl text-foreground/80 max-w-3xl mx-auto px-2">
-              Exclusive sessions featuring industry experts, thought leaders, and
-              innovators shaping the future of finance
-            </p>
-          </motion.div>
-        )}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
+          className="text-center mb-12 sm:mb-16"
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white">
+            FLAGSHIP <span className="text-finance-teal">CONCLAVE</span>
+          </h2>
+          {!isMobile && (
+            <div className="w-32 h-1 bg-gradient-to-r from-finance-teal to-finance-mint mx-auto mb-6" />
+          )}
+          <p className="text-base sm:text-lg md:text-xl text-foreground/80 max-w-3xl mx-auto px-2">
+            Exclusive sessions featuring industry experts, thought leaders, and
+            innovators shaping the future of finance
+          </p>
+        </motion.div>
 
         {/* Sessions Grid - Optimized for mobile */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mb-8">
           {sessions.map((session, index) => (
             <motion.div
               key={session.id}
-              {...sessionAnimationVariants(index)}
+              initial={{ opacity: 0, y: isMobile ? 0 : 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: isMobile ? 0.2 : 0.4,
+                delay: isMobile ? 0 : Math.min(index * 0.1, 0.2),
+              }}
               className="group"
             >
               <motion.div
@@ -196,85 +161,84 @@ export default function OptimizedFlagshipConclaveSection() {
                   </div>
                 </div>
 
-                {/* Speakers List - Always visible on mobile, collapsed on desktop */}
-                <AnimatePresence>
-                  {(isMobile || expandedSession === session.id) && (
-                    <motion.div
-                      initial={isMobile ? { opacity: 0, height: 0 } : {}}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={isMobile ? { opacity: 0, height: 0 } : {}}
-                      transition={{ duration: 0.2 }}
-                      className="px-4 sm:px-6 pb-4 sm:pb-6 space-y-3 sm:space-y-4"
-                    >
-                      {session.speakers.length > 0 ? (
-                        session.speakers.map((speaker, speakerIndex) => (
-                          <motion.div
-                            key={speaker.id}
-                            initial={
-                              isMobile ? { opacity: 0 } : { opacity: 0, x: -20 }
-                            }
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{
-                              delay: isMobile
-                                ? speakerIndex * 0.02
-                                : speakerIndex * 0.1,
-                            }}
-                            className="bg-finance-navy/50 rounded-lg p-3 sm:p-4 border border-finance-teal/20 hover:border-finance-teal/40 transition-colors"
-                          >
-                            <div className="flex gap-3 sm:gap-4">
-                              {speaker.photo && (
-                                <LazyImage
-                                  src={speaker.photo}
-                                  alt={speaker.name}
-                                  className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg object-cover flex-shrink-0"
-                                />
-                              )}
-                              <div className="flex-1 min-w-0">
-                                <div className="font-bold text-finance-teal mb-1 text-sm sm:text-base line-clamp-2">
-                                  {speaker.name}
-                                </div>
-                                {speaker.bio && (
-                                  <p className="text-xs text-foreground/70 mb-2 line-clamp-2">
-                                    {speaker.bio}
-                                  </p>
-                                )}
-                                {(speaker.startTime || speaker.endTime) && (
-                                  <div className="flex items-center gap-2 text-finance-mint text-xs mb-2">
-                                    <Clock className="w-3 h-3 flex-shrink-0" />
-                                    <span>
-                                      {speaker.startTime || "—"}{" "}
-                                      {speaker.endTime &&
-                                        `to ${speaker.endTime}`}
-                                    </span>
-                                  </div>
-                                )}
-                                {speaker.linkedinId && (
-                                  <a
-                                    href={
-                                      speaker.linkedinId.startsWith("http")
-                                        ? speaker.linkedinId
-                                        : `https://linkedin.com/in/${speaker.linkedinId}`
-                                    }
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1 text-finance-electric text-xs hover:text-finance-teal transition-colors"
-                                  >
-                                    LinkedIn
-                                    <ExternalLink className="w-3 h-3" />
-                                  </a>
-                                )}
+                {/* Speakers List - Always visible */}
+                <motion.div
+                  initial={false}
+                  animate={{
+                    height: isMobile || expandedSession === session.id ? "auto" : 0,
+                    opacity: isMobile || expandedSession === session.id ? 1 : 0,
+                  }}
+                  transition={{
+                    duration: 0.2,
+                    opacity: { duration: 0.15 },
+                  }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-4 sm:px-6 pb-4 sm:pb-6 space-y-3 sm:space-y-4">
+                    {session.speakers.length > 0 ? (
+                      session.speakers.map((speaker) => (
+                        <motion.div
+                          key={speaker.id}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{
+                            duration: 0.2,
+                          }}
+                          className="bg-finance-navy/50 rounded-lg p-3 sm:p-4 border border-finance-teal/20 hover:border-finance-teal/40 transition-colors"
+                        >
+                          <div className="flex gap-3 sm:gap-4">
+                            {speaker.photo && (
+                              <LazyImage
+                                src={speaker.photo}
+                                alt={speaker.name}
+                                className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg object-cover flex-shrink-0"
+                              />
+                            )}
+                            <div className="flex-1 min-w-0">
+                              <div className="font-bold text-finance-teal mb-1 text-sm sm:text-base line-clamp-2">
+                                {speaker.name}
                               </div>
+                              {speaker.bio && (
+                                <p className="text-xs text-foreground/70 mb-2 line-clamp-2">
+                                  {speaker.bio}
+                                </p>
+                              )}
+                              {(speaker.startTime || speaker.endTime) && (
+                                <div className="flex items-center gap-2 text-finance-mint text-xs mb-2">
+                                  <Clock className="w-3 h-3 flex-shrink-0" />
+                                  <span>
+                                    {speaker.startTime || "—"}{" "}
+                                    {speaker.endTime &&
+                                      `to ${speaker.endTime}`}
+                                  </span>
+                                </div>
+                              )}
+                              {speaker.linkedinId && (
+                                <a
+                                  href={
+                                    speaker.linkedinId.startsWith("http")
+                                      ? speaker.linkedinId
+                                      : `https://linkedin.com/in/${speaker.linkedinId}`
+                                  }
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 text-finance-electric text-xs hover:text-finance-teal transition-colors"
+                                >
+                                  LinkedIn
+                                  <ExternalLink className="w-3 h-3" />
+                                </a>
+                              )}
                             </div>
-                          </motion.div>
-                        ))
-                      ) : (
-                        <div className="text-center py-4 text-foreground/60 text-sm">
-                          No speakers added yet for this session
-                        </div>
-                      )}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                          </div>
+                        </motion.div>
+                      ))
+                    ) : (
+                      <div className="text-center py-4 text-foreground/60 text-sm">
+                        No speakers added yet for this session
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
 
                 {/* Toggle button for desktop only */}
                 {!isMobile && session.speakers.length > 0 && (
@@ -306,13 +270,9 @@ export default function OptimizedFlagshipConclaveSection() {
 
         {/* Summary Stats - Optimized for mobile */}
         <motion.div
-          initial={
-            isMobile
-              ? { opacity: 0 }
-              : { opacity: 0, y: 20 }
-          }
-          animate={inView ? (isMobile ? { opacity: 1 } : { opacity: 1, y: 0 }) : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
           className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mt-8 sm:mt-12"
         >
           <div className="bg-gradient-to-br from-finance-teal/10 to-finance-mint/10 rounded-lg p-4 sm:p-6 border border-finance-teal/30 text-center">
