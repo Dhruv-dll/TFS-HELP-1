@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo } from "react";
-import eventsData from "../../data/events.json";
 
 interface EventItem {
   title: string;
@@ -28,13 +27,46 @@ interface UpcomingEvent {
   };
 }
 
+interface EventsConfig {
+  pastEvents: {
+    [key: string]: {
+      events?: EventItem[];
+      comingSoon?: boolean;
+    };
+  };
+  upcomingEvents: UpcomingEvent[];
+}
+
+const defaultConfig: EventsConfig = {
+  pastEvents: {
+    "saturday-sessions": { events: [], comingSoon: false },
+    "networking-events": { comingSoon: true },
+    "flagship-event": { comingSoon: true },
+  },
+  upcomingEvents: [],
+};
+
 export function useEventsData() {
-  const [config, setConfig] = useState(eventsData);
+  const [config, setConfig] = useState<EventsConfig>(defaultConfig);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setConfig(eventsData);
-    setLoading(false);
+    const loadEvents = async () => {
+      try {
+        const response = await fetch("/data/events.json");
+        if (response.ok) {
+          const data = await response.json();
+          setConfig(data);
+        }
+      } catch (error) {
+        console.warn("Failed to load events:", error);
+        setConfig(defaultConfig);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadEvents();
   }, []);
 
   const getTitleFromId = (id: string): string => {
