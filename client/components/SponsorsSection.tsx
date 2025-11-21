@@ -115,8 +115,7 @@ export default function SponsorsSection() {
             {/* Logo Section */}
             <div className="text-center flex-1 flex flex-col justify-center">
               <motion.div
-                className="mx-auto mb-4 bg-white/5 rounded-lg flex items-center justify-center border border-finance-gold/10 p-2"
-                style={{ width: "202px", height: "85px" }}
+                className={`mx-auto mb-4 bg-white/5 rounded-lg flex items-center justify-center border border-finance-gold/10 p-2 ${logoSize}`}
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
               >
