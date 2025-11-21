@@ -138,10 +138,10 @@ export default function SponsorsSection() {
                   className={`w-full h-full rounded-lg bg-gradient-to-br from-finance-gold/10 to-finance-electric/10 ${sponsor.logo ? "hidden" : ""}`}
                 ></div>
               </motion.div>
-              <h3 className="text-lg font-bold text-finance-teal mb-2 leading-tight">
+              <h3 className={`font-bold text-finance-teal mb-2 leading-tight ${isLarge ? "text-2xl" : "text-lg"}`}>
                 {sponsor.name}
               </h3>
-              <p className="text-finance-teal/80 text-sm mb-3">
+              <p className={`text-finance-teal/80 mb-3 ${isLarge ? "text-base" : "text-sm"}`}>
                 {sponsor.industry}
               </p>
             </div>
