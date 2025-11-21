@@ -7,7 +7,7 @@ import MarketDataErrorBoundary, {
   NetworkStatusIndicator,
 } from "../components/MarketDataErrorBoundary";
 import MobileOptimizedEventsSection from "../components/MobileOptimizedEventsSection";
-import FlagshipConclaveSection from "../components/FlagshipConclaveSection";
+import MobileConclaveSection from "../components/MobileConclaveSection";
 import AboutSection from "../components/AboutSection";
 import AboutBAFSection from "../components/AboutBAFSection";
 import ContactSection from "../components/ContactSection";
@@ -382,7 +382,7 @@ export default function Index() {
 
           {/* Flagship Conclave Sessions */}
           <section id="conclave">
-            <FlagshipConclaveSection />
+            <MobileConclaveSection />
           </section>
 
           {/* Insights Section */}
