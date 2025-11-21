@@ -30,12 +30,6 @@ function expressPlugin(): Plugin {
     name: "express-plugin",
     apply: "serve", // Only apply during development (serve mode)
     configureServer(server) {
-      // Serve static data folder
-      server.middlewares.use("/data", (req, res, next) => {
-        const express = require("express");
-        express.static("./data")(req, res, next);
-      });
-
       const app = createServer();
 
       // Add Express app as middleware to Vite dev server
