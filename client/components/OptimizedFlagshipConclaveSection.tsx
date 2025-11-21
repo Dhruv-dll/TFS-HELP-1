@@ -15,7 +15,15 @@ import { isMobileDevice } from "../utils/mobileOptimization";
 
 // Lazy image component for speaker photos
 const LazyImage = React.memo(
-  ({ src, alt, className }: { src: string; alt: string; className: string }) => {
+  ({
+    src,
+    alt,
+    className,
+  }: {
+    src: string;
+    alt: string;
+    className: string;
+  }) => {
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(false);
 
@@ -35,7 +43,7 @@ const LazyImage = React.memo(
         }}
       />
     );
-  }
+  },
 );
 
 LazyImage.displayName = "LazyImage";
@@ -123,7 +131,14 @@ export default function OptimizedFlagshipConclaveSection() {
             >
               <motion.div
                 className="relative h-full bg-gradient-to-br from-finance-navy/80 to-finance-navy-light/50 backdrop-blur-xl border border-finance-teal/30 rounded-xl sm:rounded-2xl overflow-hidden hover:border-finance-teal/60 transition-all duration-300"
-                whileHover={!isMobile ? { y: -5, boxShadow: "0 20px 40px rgba(32, 178, 170, 0.2)" } : {}}
+                whileHover={
+                  !isMobile
+                    ? {
+                        y: -5,
+                        boxShadow: "0 20px 40px rgba(32, 178, 170, 0.2)",
+                      }
+                    : {}
+                }
               >
                 {/* Session Header */}
                 <div className="p-4 sm:p-6 border-b border-finance-teal/20">
@@ -165,7 +180,8 @@ export default function OptimizedFlagshipConclaveSection() {
                 <motion.div
                   initial={false}
                   animate={{
-                    height: isMobile || expandedSession === session.id ? "auto" : 0,
+                    height:
+                      isMobile || expandedSession === session.id ? "auto" : 0,
                     opacity: isMobile || expandedSession === session.id ? 1 : 0,
                   }}
                   transition={{
@@ -208,8 +224,7 @@ export default function OptimizedFlagshipConclaveSection() {
                                   <Clock className="w-3 h-3 flex-shrink-0" />
                                   <span>
                                     {speaker.startTime || "—"}{" "}
-                                    {speaker.endTime &&
-                                      `to ${speaker.endTime}`}
+                                    {speaker.endTime && `to ${speaker.endTime}`}
                                   </span>
                                 </div>
                               )}
@@ -245,7 +260,7 @@ export default function OptimizedFlagshipConclaveSection() {
                   <motion.button
                     onClick={() =>
                       setExpandedSession(
-                        expandedSession === session.id ? null : session.id
+                        expandedSession === session.id ? null : session.id,
                       )
                     }
                     className="w-full px-4 sm:px-6 py-3 border-t border-finance-teal/20 flex items-center justify-center gap-2 text-finance-teal hover:bg-finance-teal/10 transition-colors text-sm sm:text-base"
@@ -294,11 +309,8 @@ export default function OptimizedFlagshipConclaveSection() {
           <div className="bg-gradient-to-br from-finance-electric/10 to-finance-teal/10 rounded-lg p-4 sm:p-6 border border-finance-electric/30 text-center">
             <div className="text-2xl sm:text-4xl font-bold text-finance-electric mb-2">
               {
-                new Set(
-                  sessions.flatMap((s) =>
-                    s.speakers.map((sp) => sp.id)
-                  )
-                ).size
+                new Set(sessions.flatMap((s) => s.speakers.map((sp) => sp.id)))
+                  .size
               }
             </div>
             <div className="text-xs sm:text-base text-foreground/70">

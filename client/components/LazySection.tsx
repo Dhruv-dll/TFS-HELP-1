@@ -19,11 +19,7 @@ export function LazySection({
 
   return (
     <div ref={ref}>
-      {inView ? (
-        <Suspense fallback={fallback}>{children}</Suspense>
-      ) : (
-        fallback
-      )}
+      {inView ? <Suspense fallback={fallback}>{children}</Suspense> : fallback}
     </div>
   );
 }

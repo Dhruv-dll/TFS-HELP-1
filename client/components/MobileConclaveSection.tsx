@@ -5,7 +5,7 @@ import { useConclaveSessionsData } from "../hooks/useConclaveSessionsData";
 export default function MobileConclaveSection() {
   const { sessions, loading } = useConclaveSessionsData();
   const [expandedSessions, setExpandedSessions] = useState<Set<string>>(
-    new Set(sessions.length > 0 ? [sessions[0]?.id] : [])
+    new Set(sessions.length > 0 ? [sessions[0]?.id] : []),
   );
 
   const toggleSession = (sessionId: string) => {
@@ -118,9 +118,8 @@ export default function MobileConclaveSection() {
                                 loading="lazy"
                                 className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg object-cover flex-shrink-0"
                                 onError={(e) => {
-                                  (
-                                    e.target as HTMLImageElement
-                                  ).style.display = "none";
+                                  (e.target as HTMLImageElement).style.display =
+                                    "none";
                                 }}
                               />
                             )}
@@ -138,8 +137,7 @@ export default function MobileConclaveSection() {
                                   <Clock className="w-3 h-3 flex-shrink-0" />
                                   <span>
                                     {speaker.startTime || "—"}{" "}
-                                    {speaker.endTime &&
-                                      `to ${speaker.endTime}`}
+                                    {speaker.endTime && `to ${speaker.endTime}`}
                                   </span>
                                 </div>
                               )}
@@ -195,9 +193,8 @@ export default function MobileConclaveSection() {
           <div className="bg-gradient-to-br from-finance-electric/10 to-finance-teal/10 rounded-lg p-4 sm:p-6 border border-finance-electric/30 text-center">
             <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-finance-electric mb-2">
               {
-                new Set(
-                  sessions.flatMap((s) => s.speakers.map((sp) => sp.id))
-                ).size
+                new Set(sessions.flatMap((s) => s.speakers.map((sp) => sp.id)))
+                  .size
               }
             </div>
             <div className="text-xs sm:text-sm text-foreground/70">
