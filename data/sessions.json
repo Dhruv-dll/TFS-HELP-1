@@ -1,4 +1,83 @@
 {
-  "sessions": [],
+  "sessions": [
+    {
+      "id": "session-data-finance",
+      "name": "Data Meets Finance",
+      "description": "Exploring the intersection of data analytics and financial decision-making in modern markets",
+      "startTime": "10:00 AM",
+      "endTime": "11:30 AM",
+      "speakers": [
+        {
+          "id": "speaker-rajesh-kumar",
+          "name": "Rajesh Kumar",
+          "linkedinId": "rajesh-kumar-analyst",
+          "photo": "https://raw.githubusercontent.com/Dhruv-dll/TFS_Final_3/refs/heads/main/Icons/placeholder-speaker.jpg",
+          "bio": "Senior Data Analyst at HDFC Bank with 8 years of experience in financial data analytics",
+          "startTime": "10:00 AM",
+          "endTime": "10:45 AM"
+        },
+        {
+          "id": "speaker-priya-sharma",
+          "name": "Priya Sharma",
+          "linkedinId": "priya-sharma-finance",
+          "photo": "https://raw.githubusercontent.com/Dhruv-dll/TFS_Final_3/refs/heads/main/Icons/placeholder-speaker.jpg",
+          "bio": "Financial Analyst specializing in algorithmic trading and machine learning applications",
+          "startTime": "10:45 AM",
+          "endTime": "11:30 AM"
+        }
+      ],
+      "createdAt": 1757600810272,
+      "isActive": true
+    },
+    {
+      "id": "session-banking-101",
+      "name": "Banking 101: Demystifying India's Backbone",
+      "description": "Understanding the fundamentals of India's banking system and its role in economic development",
+      "startTime": "2:00 PM",
+      "endTime": "3:30 PM",
+      "speakers": [
+        {
+          "id": "speaker-vikram-desai",
+          "name": "Vikram Desai",
+          "linkedinId": "vikram-desai-banking",
+          "photo": "https://raw.githubusercontent.com/Dhruv-dll/TFS_Final_3/refs/heads/main/Icons/placeholder-speaker.jpg",
+          "bio": "Former VP at State Bank of India with 15 years of banking industry experience",
+          "startTime": "2:00 PM",
+          "endTime": "2:45 PM"
+        },
+        {
+          "id": "speaker-ananya-gupta",
+          "name": "Ananya Gupta",
+          "linkedinId": "ananya-gupta-fintech",
+          "photo": "https://raw.githubusercontent.com/Dhruv-dll/TFS_Final_3/refs/heads/main/Icons/placeholder-speaker.jpg",
+          "bio": "FinTech entrepreneur and blockchain specialist, founder of digital banking startup",
+          "startTime": "2:45 PM",
+          "endTime": "3:30 PM"
+        }
+      ],
+      "createdAt": 1757600810272,
+      "isActive": true
+    },
+    {
+      "id": "session-investment-strategies",
+      "name": "Investment Strategies for Beginners",
+      "description": "Learn fundamental investment strategies and how to build a diversified portfolio",
+      "startTime": "4:00 PM",
+      "endTime": "5:30 PM",
+      "speakers": [
+        {
+          "id": "speaker-amit-patel",
+          "name": "Amit Patel",
+          "linkedinId": "amit-patel-investor",
+          "photo": "https://raw.githubusercontent.com/Dhruv-dll/TFS_Final_3/refs/heads/main/Icons/placeholder-speaker.jpg",
+          "bio": "Certified Financial Planner and investment advisor with focus on retail investors",
+          "startTime": "4:00 PM",
+          "endTime": "5:30 PM"
+        }
+      ],
+      "createdAt": 1757600810272,
+      "isActive": false
+    }
+  ],
   "lastModified": 1757600810272
 }

@@ -13,10 +13,7 @@ import AboutBAFSection from "../components/AboutBAFSection";
 import ContactSection from "../components/ContactSection";
 import SponsorsSection from "../components/SponsorsSection";
 import FloatingMarketIcon from "../components/FloatingMarketIcon";
-import AdminEventsPanel from "../components/AdminEventsPanel";
-import AdminLogin from "../components/AdminLogin";
 import { EventPopupProvider } from "../hooks/useEventPopup";
-import { AuthProvider, useAuth } from "../hooks/useAuth";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
   Users,
@@ -38,8 +35,6 @@ import {
 export default function Index() {
   const [scrolled, setScrolled] = useState(false);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
-  const [showAdminPanel, setShowAdminPanel] = useState(false);
-  const [showLoginPanel, setShowLoginPanel] = useState(false);
   const { scrollYProgress } = useScroll();
 
   // Color temperature transformation based on scroll
@@ -66,20 +61,6 @@ export default function Index() {
       window.removeEventListener("online", handleOnline);
       window.removeEventListener("offline", handleOffline);
     };
-  }, []);
-
-  // Admin panel keyboard shortcut (Ctrl+Alt+A)
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.ctrlKey && event.altKey && event.key.toLowerCase() === "a") {
-        event.preventDefault();
-        console.log("🔐 Admin panel shortcut triggered");
-        setShowLoginPanel(true);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   const aboutSections = [
@@ -364,127 +345,101 @@ export default function Index() {
   ];
 
   return (
-    <AuthProvider>
-      <EventPopupProvider>
-        <div className="min-h-screen">
-          {/* Main Content */}
-          <>
-            <ECCStyleNavigation scrolled={scrolled} />
-            <NetworkStatusIndicator isOnline={isOnline} />
-            <FloatingMarketIcon />
+    <EventPopupProvider>
+      <div className="min-h-screen">
+        {/* Main Content */}
+        <>
+          <ECCStyleNavigation scrolled={scrolled} />
+          <NetworkStatusIndicator isOnline={isOnline} />
+          <FloatingMarketIcon />
 
-            {/* Hero Section */}
-            <MarketDataErrorBoundary>
-              <section id="home">
-                <ProfessionalHeroSection />
-              </section>
-            </MarketDataErrorBoundary>
-
-            {/* About TFS Section */}
-            <section id="about">
-              <AboutSection />
+          {/* Hero Section */}
+          <MarketDataErrorBoundary>
+            <section id="home">
+              <ProfessionalHeroSection />
             </section>
+          </MarketDataErrorBoundary>
 
-            {/* About BAF Section */}
-            <section id="about-baf">
-              <AboutBAFSection />
-            </section>
+          {/* About TFS Section */}
+          <section id="about">
+            <AboutSection />
+          </section>
 
-            {/* Meet the Team Section */}
-            <section id="luminaries">
-              <ModernLuminariesSection />
-            </section>
+          {/* About BAF Section */}
+          <section id="about-baf">
+            <AboutBAFSection />
+          </section>
 
-            {/* Events Section */}
-            <section id="events">
-              <MobileOptimizedEventsSection />
-            </section>
+          {/* Meet the Team Section */}
+          <section id="luminaries">
+            <ModernLuminariesSection />
+          </section>
 
-            {/* Flagship Conclave Sessions */}
-            <section id="conclave">
-              <FlagshipConclaveSection />
-            </section>
+          {/* Events Section */}
+          <section id="events">
+            <MobileOptimizedEventsSection />
+          </section>
 
-            {/* Insights Section */}
-            <section id="insights">
-              <OptimizedFinsightSection />
-            </section>
+          {/* Flagship Conclave Sessions */}
+          <section id="conclave">
+            <FlagshipConclaveSection />
+          </section>
 
-            {/* Sponsors Section */}
-            <section id="sponsors">
-              <SponsorsSection />
-            </section>
+          {/* Insights Section */}
+          <section id="insights">
+            <OptimizedFinsightSection />
+          </section>
 
-            {/* Contact Us Section */}
-            <section id="contact">
-              <ContactSection />
-            </section>
+          {/* Sponsors Section */}
+          <section id="sponsors">
+            <SponsorsSection />
+          </section>
 
-            {/* Footer */}
-            <footer className="py-12 px-6 bg-finance-navy border-t border-finance-cyan/20">
-              <div className="container mx-auto">
-                <div className="text-center">
-                  <div className="flex items-center justify-center space-x-4 mb-6">
-                    <div
-                      className="w-12 h-12 flex items-center justify-center rounded-lg border border-finance-cyan/30 relative overflow-hidden"
-                      style={{
-                        backgroundImage:
-                          "url(https://cdn.builder.io/api/v1/image/assets%2F929e4df9940a4d789ccda51924367667%2F738f11e9971c4f0f8ef4fd148b7ae990)",
-                        backgroundRepeat: "no-repeat",
-                        backgroundPosition: "center",
-                        backgroundSize: "cover",
-                      }}
-                    />
-                    <div>
-                      <h3 className="text-xl font-bold text-finance-cyan finance-heading">
-                        The Finance Symposium
-                      </h3>
-                      <p className="text-sm text-finance-teal/80 professional-text">
-                        St. Xavier's College Mumbai
-                      </p>
-                    </div>
-                  </div>
+          {/* Contact Us Section */}
+          <section id="contact">
+            <ContactSection />
+          </section>
 
-                  <p className="text-muted-foreground mb-6 max-w-2xl mx-auto professional-text">
-                    Illuminating the future of finance through education,
-                    innovation, and industry collaboration. Join us in shaping
-                    the next generation of financial leaders.
-                  </p>
-
-                  <div className="text-finance-cyan/60 text-sm professional-text">
-                    © 2024 The Finance Symposium. All rights reserved. |
-                    Designed with ❤️ by Dhruv Moghe
-                  </div>
-
-                  {/* Admin Access Button */}
-                  <div className="mt-6 pt-4 border-t border-finance-cyan/20 flex justify-center">
-                    <button
-                      onClick={() => setShowLoginPanel(true)}
-                      className="px-3 py-1.5 text-xs text-finance-cyan/50 hover:text-finance-cyan/80 rounded border border-finance-cyan/20 hover:border-finance-cyan/50 transition-all duration-200 hover:bg-finance-cyan/5"
-                      title="Admin Access"
-                    >
-                      ⚙️ Admin
-                    </button>
+          {/* Footer */}
+          <footer className="py-12 px-6 bg-finance-navy border-t border-finance-cyan/20">
+            <div className="container mx-auto">
+              <div className="text-center">
+                <div className="flex items-center justify-center space-x-4 mb-6">
+                  <div
+                    className="w-12 h-12 flex items-center justify-center rounded-lg border border-finance-cyan/30 relative overflow-hidden"
+                    style={{
+                      backgroundImage:
+                        "url(https://cdn.builder.io/api/v1/image/assets%2F929e4df9940a4d789ccda51924367667%2F738f11e9971c4f0f8ef4fd148b7ae990)",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center",
+                      backgroundSize: "cover",
+                    }}
+                  />
+                  <div>
+                    <h3 className="text-xl font-bold text-finance-cyan finance-heading">
+                      The Finance Symposium
+                    </h3>
+                    <p className="text-sm text-finance-teal/80 professional-text">
+                      St. Xavier's College Mumbai
+                    </p>
                   </div>
                 </div>
+
+                <p className="text-muted-foreground mb-6 max-w-2xl mx-auto professional-text">
+                  Illuminating the future of finance through education,
+                  innovation, and industry collaboration. Join us in shaping the
+                  next generation of financial leaders.
+                </p>
+
+                <div className="text-finance-cyan/60 text-sm professional-text">
+                  © 2024 The Finance Symposium. All rights reserved. | Designed
+                  with ❤️ by Dhruv Moghe
+                </div>
               </div>
-            </footer>
-          </>
-
-          {/* Admin Login Panel */}
-          <AdminLogin
-            isOpen={showLoginPanel}
-            onClose={() => setShowLoginPanel(false)}
-            onSuccess={() => setShowAdminPanel(true)}
-          />
-
-          {/* Admin Events Panel */}
-          <AdminEventsPanel
-            isOpen={showAdminPanel}
-            onClose={() => setShowAdminPanel(false)}
-          />
-        </div>
-      </EventPopupProvider>
-    </AuthProvider>
+            </div>
+          </footer>
+        </>
+      </div>
+    </EventPopupProvider>
   );
 }
