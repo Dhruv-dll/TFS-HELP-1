@@ -1,28 +1,46 @@
 {
   "sessions": [
     {
-      "id": "session-data-finance",
-      "name": "Data Meets Finance",
-      "description": "Exploring the intersection of data analytics and financial decision-making in modern markets",
+      "id": "session-1",
+      "name": "Core Finance Panel",
+      "description": "This session discusses how senior finance leaders navigate uncertainty, make decisions under pressure, and convert challenges into strategic opportunities.",
       "startTime": "10:00 AM",
       "endTime": "11:30 AM",
       "speakers": [
         {
-          "id": "speaker-rajesh-kumar",
-          "name": "Rajesh Kumar",
-          "linkedinId": "rajesh-kumar-analyst",
-          "photo": "https://raw.githubusercontent.com/Dhruv-dll/TFS_Final_3/refs/heads/main/Icons/placeholder-speaker.jpg",
-          "bio": "Senior Data Analyst at HDFC Bank with 8 years of experience in financial data analytics",
+          "id": "speaker-Rohit-Pathak",
+          "name": "Mr. Rohit Pathak",
+          "linkedinId": "https://in.linkedin.com/in/r-pathak?utm_source=share&utm_medium=member_mweb&utm_campaign=share_via&utm_content=profile",
+          "photo": "https://media.licdn.com/dms/image/v2/D4D03AQESno-2KNAsOg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1726165190596?e=1765411200&v=beta&t=xQ4gGvO0GBCNGJ00UC5V1De4evHDAS4aVb50G0KGt5w",
+          "bio": "CEO, Copper Business, Hindalco Industries Ltd.",
           "startTime": "10:00 AM",
-          "endTime": "10:45 AM"
+          "endTime": "11:30 AM"
         },
         {
-          "id": "speaker-priya-sharma",
-          "name": "Priya Sharma",
-          "linkedinId": "priya-sharma-finance",
-          "photo": "https://raw.githubusercontent.com/Dhruv-dll/TFS_Final_3/refs/heads/main/Icons/placeholder-speaker.jpg",
-          "bio": "Financial Analyst specializing in algorithmic trading and machine learning applications",
-          "startTime": "10:45 AM",
+          "id": "speaker-Akshay-Patrao",
+          "name": "Mr. Akshay Patrao",
+          "linkedinId": "https://www.linkedin.com/in/akshay-patrao-ab40859/",
+          "photo": "https://media.licdn.com/dms/image/v2/C5603AQH1VGQWRVLkuA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1589680475752?e=1765411200&v=beta&t=jZSk3qzb_AQlhdiB-8xIQ8apU4BEj7rgA5jT4fdba8A",
+          "bio": "Managing Director, J.P. Morgan Chase & Co.",
+          "startTime": "10:00 AM",
+          "endTime": "11:30 AM"
+        },
+        {
+          "id": "speaker-3",
+          "name": "Mr. Madhavan S.R.",
+          "linkedinId": "https://www.linkedin.com/in/madhavan-sr-5b284514/",
+          "photo": "https://media.licdn.com/dms/image/v2/D4D03AQHwkw1JLkqTnw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1729356155702?e=1765411200&v=beta&t=Q5TjFS_yhdz3gd4nRKJBRBkNt9NPOAUhZrmlG8WMXmw",
+          "bio": "CFO, Nivea India Ltd.",
+          "startTime": "10:00 AM",
+          "endTime": "11:30 AM"
+        },
+        {
+          "id": "speaker-4",
+          "name": "Ms. Shaamlie Anggane",
+          "linkedinId": "https://www.linkedin.com/in/shaamlie-anggane-81201713",
+          "photo": "https://media.licdn.com/dms/image/v2/D4D03AQHQGaHtC6aAXQ/profile-displayphoto-crop_800_800/B4DZnR43bqIEAI-/0/1760162971529?e=1765411200&v=beta&t=WLVq-Zn_sUG7dTjQkGUhDuPlfAJv4b1EglIhLil6i1I",
+          "bio": "Executive Director, Morgan Stanley (Fixed Income COO)",
+          "startTime": "10:00 AM",
           "endTime": "11:30 AM"
         }
       ],
