@@ -35,8 +35,6 @@ import {
 export default function Index() {
   const [scrolled, setScrolled] = useState(false);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
-  const [showAdminPanel, setShowAdminPanel] = useState(false);
-  const [showLoginPanel, setShowLoginPanel] = useState(false);
   const { scrollYProgress } = useScroll();
 
   // Color temperature transformation based on scroll
@@ -70,7 +68,7 @@ export default function Index() {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.ctrlKey && event.altKey && event.key.toLowerCase() === "a") {
         event.preventDefault();
-        console.log("���� Admin panel shortcut triggered");
+        console.log("🔐 Admin panel shortcut triggered");
         setShowLoginPanel(true);
       }
     };
