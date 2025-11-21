@@ -2,7 +2,7 @@
   "sessions": [
     {
       "id": "session-1",
-      "name": "Core Finance Panel",
+      "name": "Session 1 - Core Finance Panel",
       "description": "This session discusses how senior finance leaders navigate uncertainty, make decisions under pressure, and convert challenges into strategic opportunities.",
       "startTime": "10:00 AM",
       "endTime": "11:30 AM",
@@ -48,29 +48,38 @@
       "isActive": true
     },
     {
-      "id": "session-banking-101",
-      "name": "Banking 101: Demystifying India's Backbone",
-      "description": "Understanding the fundamentals of India's banking system and its role in economic development",
-      "startTime": "2:00 PM",
-      "endTime": "3:30 PM",
+      "id": "session-2",
+      "name": "Media and Creativity Panel",
+      "description": "This panel aims to explore how storytelling intersects with business, how creative risks influence markets, how platforms shape culture, and how emerging creators can find their voice in an increasingly competitive space.",
+      "startTime": "11:45 AM",
+      "endTime": "1:15 PM",
       "speakers": [
         {
-          "id": "speaker-vikram-desai",
-          "name": "Vikram Desai",
-          "linkedinId": "vikram-desai-banking",
-          "photo": "https://raw.githubusercontent.com/Dhruv-dll/TFS_Final_3/refs/heads/main/Icons/placeholder-speaker.jpg",
-          "bio": "Former VP at State Bank of India with 15 years of banking industry experience",
-          "startTime": "2:00 PM",
-          "endTime": "2:45 PM"
+          "id": "speaker-05",
+          "name": "Mrs. Srishti Behl-Arya",
+          "linkedinId": "https://www.linkedin.com/in/srishti-behl-825980107/",
+          "photo": "https://media.licdn.com/dms/image/v2/C4E03AQFGCuQ0m35MEg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1609073909226?e=1765411200&v=beta&t=MthYbCAoDLxU9BhFN6CC3CYi9_AbKOxGy69UbCqty6o",
+          "bio": "Founder, Starfish Stories | Former CEO, Phantom Films | Former Director, International Original Films, Netflix India",
+          "startTime": "11:45 AM",
+          "endTime": "1:15 PM"
         },
         {
-          "id": "speaker-ananya-gupta",
-          "name": "Ananya Gupta",
-          "linkedinId": "ananya-gupta-fintech",
-          "photo": "https://raw.githubusercontent.com/Dhruv-dll/TFS_Final_3/refs/heads/main/Icons/placeholder-speaker.jpg",
-          "bio": "FinTech entrepreneur and blockchain specialist, founder of digital banking startup",
-          "startTime": "2:45 PM",
-          "endTime": "3:30 PM"
+          "id": "speaker-6",
+          "name": "Mr. Shariq Patel",
+          "linkedinId": "https://www.linkedin.com/in/shariq-patel-82a3654/",
+          "photo": "https://media.licdn.com/dms/image/v2/C4D03AQGS433zRSpusg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1605543328682?e=1765411200&v=beta&t=MHk4lC03t-P1A7FH_VSV7yPhI-fDiBBCp16CJFrmcz4",
+          "bio": "Former CEO, Zee Studios | Former Founder, Trignomedia | Former Senior VP, Studio 18 & Indian Cricket League, Zee Group",
+          "startTime": "11:45 AM",
+          "endTime": "1:15 PM"
+        },
+        {
+          "id": "speaker-7",
+          "name": "Ms. Mrinalini Khanna",
+          "linkedinId": "https://www.linkedin.com/in/mrinalini-khanna-a218896/?originalSubdomain=in",
+          "photo": "https://media.licdn.com/dms/image/v2/D4D03AQGHolQaKzB2Bw/profile-displayphoto-shrink_800_800/B4DZT.YPL0G8Ac-/0/1739434555147?e=1765411200&v=beta&t=c6BfM5N0iDO8TaVRVA8316WPaZ8XtbJiYhAR9wcJVCo",
+          "bio": "Ex VP Originals Lionsgate India | Ex VP Business Development Endemolshine India | Ex Miditech | Ex NDTV",
+          "startTime": "11:45 AM",
+          "endTime": "1:15 PM"
         }
       ],
       "createdAt": 1757600810272,
