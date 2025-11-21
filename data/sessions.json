@@ -122,6 +122,35 @@
       ],
       "createdAt": 1757600810272,
       "isActive": false
+    },
+    {
+      "id": "session-4",
+      "name": "Startups Panel",
+      "description": "This session brings together two dynamic founders who represent the new wave of Indian consumer brands. Their journeys capture the realities of product experimentation, cultural alignment, distribution challenges, transparent storytelling, and the grit required to build in public.",
+      "startTime": "4:00 PM",
+      "endTime": "5:30 PM",
+      "speakers": [
+        {
+          "id": "speaker-11",
+          "name": "Mr. Kiran Shah",
+          "linkedinId": "https://www.linkedin.com/in/kiran-shah-goeszero/",
+          "photo": "https://media.licdn.com/dms/image/v2/D4D03AQFYoAZtQzc_uQ/profile-displayphoto-crop_800_800/B4DZlxjuDVJAAI-/0/1758546814632?e=1765411200&v=beta&t=EmiN1mJG5GzuVz29Wq4xM5olRIE__cleSGtL5SvnO8E",
+          "bio": "Founder, Go Zero Ice Creams",
+          "startTime": "4:00 PM",
+          "endTime": "5:30 PM"
+        },
+        {
+          "id": "speaker-12",
+          "name": "Ms. Yuba Aga",
+          "linkedinId": "https://www.linkedin.com/in/yuba-aga-059672229/",
+          "photo": "https://media.licdn.com/dms/image/v2/D4D03AQGY9m-Hp5BE-Q/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1706428503971?e=1765411200&v=beta&t=AFD_uodCdCuR0tPdxK2fQp98JNr3WEF1m-vU059FDR8",
+          "bio": "Co-Founder, Manetain",
+          "startTime": "4:00 PM",
+          "endTime": "5:30 PM"
+        }
+      ],
+      "createdAt": 1757600810272,
+      "isActive": false
     }
   ],
   "lastModified": 1757600810272
