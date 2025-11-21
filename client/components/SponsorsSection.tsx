@@ -61,13 +61,15 @@ const sponsors: Sponsor[] = [
 export default function SponsorsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
-  const [activeTab, setActiveTab] = useState<"current" | "past">("past");
+  const [activeTab, setActiveTab] = useState<"current" | "past">("current");
   const [searchTerm, setSearchTerm] = useState("");
 
   // Dynamic data with fallback
   const { sponsors: hookSponsors } = useSponsorsData();
 
-  const sourceSponsors: Sponsor[] = (hookSponsors && hookSponsors.length > 0 ? hookSponsors : sponsors) as Sponsor[];
+  const sourceSponsors: Sponsor[] = (
+    hookSponsors && hookSponsors.length > 0 ? hookSponsors : sponsors
+  ) as Sponsor[];
 
   const currentSponsors: Sponsor[] = sourceSponsors.filter((s) => s.isActive);
   const pastSponsors = sourceSponsors.filter((s) => !s.isActive);
@@ -78,13 +80,29 @@ export default function SponsorsSection() {
     sponsor.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
+  // Split current sponsors into associate (first 2) and others
+  const associateSponsors = currentSponsors.slice(0, 2);
+  const otherCurrentSponsors = currentSponsors.slice(2);
+
   const SponsorCard = ({
     sponsor,
     index,
+    size = "normal",
+    isFirstAssociate = false,
   }: {
     sponsor: Sponsor;
     index: number;
+    size?: "normal" | "large";
+    isFirstAssociate?: boolean;
   }) => {
+    const isLarge = size === "large";
+    const cardHeight = isLarge ? "h-80" : "h-64";
+    const logoSize = isLarge
+      ? isFirstAssociate
+        ? "w-80 h-40"
+        : "w-64 h-32"
+      : "w-52 h-20";
+
     return (
       <motion.div
         initial={{ opacity: 0, y: 50, scale: 0.9 }}
@@ -93,7 +111,7 @@ export default function SponsorsSection() {
         className="relative group cursor-pointer"
       >
         <motion.div
-          className="relative h-64 overflow-hidden rounded-xl border border-finance-gold/20 bg-gradient-to-br from-finance-navy/50 to-finance-navy-light/30 backdrop-blur-xl"
+          className={`relative ${cardHeight} overflow-hidden rounded-xl border border-finance-gold/20 bg-gradient-to-br from-finance-navy/50 to-finance-navy-light/30 backdrop-blur-xl`}
           whileHover={{
             scale: 1.02,
             y: -5,
@@ -105,8 +123,7 @@ export default function SponsorsSection() {
             {/* Logo Section */}
             <div className="text-center flex-1 flex flex-col justify-center">
               <motion.div
-                className="mx-auto mb-4 bg-white/5 rounded-lg flex items-center justify-center border border-finance-gold/10 p-2"
-                style={{ width: "202px", height: "85px" }}
+                className={`mx-auto mb-4 bg-white/5 rounded-lg flex items-center justify-center border border-finance-gold/10 p-2 ${logoSize}`}
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
               >
@@ -129,10 +146,14 @@ export default function SponsorsSection() {
                   className={`w-full h-full rounded-lg bg-gradient-to-br from-finance-gold/10 to-finance-electric/10 ${sponsor.logo ? "hidden" : ""}`}
                 ></div>
               </motion.div>
-              <h3 className="text-lg font-bold text-finance-teal mb-2 leading-tight">
+              <h3
+                className={`font-bold text-finance-teal mb-2 leading-tight ${isLarge ? "text-2xl" : "text-lg"}`}
+              >
                 {sponsor.name}
               </h3>
-              <p className="text-finance-teal/80 text-sm mb-3">
+              <p
+                className={`text-finance-teal/80 mb-3 ${isLarge ? "text-base" : "text-sm"}`}
+              >
                 {sponsor.industry}
               </p>
             </div>
@@ -280,14 +301,82 @@ export default function SponsorsSection() {
               </div>
             </motion.div>
           ) : (
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto"
-              layout
-            >
-              {filteredSponsors.map((sponsor, index) => (
-                <SponsorCard key={sponsor.id} sponsor={sponsor} index={index} />
-              ))}
-            </motion.div>
+            <div>
+              {/* Associate Sponsors Row - Only shown for current sponsors without search */}
+              {activeTab === "current" &&
+                searchTerm === "" &&
+                associateSponsors.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.8, delay: 0.7 }}
+                    className="mb-16"
+                  >
+                    <h3 className="text-center text-2xl font-bold text-finance-gold mb-8">
+                      Associate Sponsors
+                    </h3>
+                    <motion.div
+                      className="flex flex-col md:flex-row justify-center gap-8 max-w-5xl mx-auto"
+                      layout
+                    >
+                      {associateSponsors.map((sponsor, index) => (
+                        <div key={sponsor.id} className="flex-1">
+                          <SponsorCard
+                            sponsor={sponsor}
+                            index={index}
+                            size="large"
+                            isFirstAssociate={index === 0}
+                          />
+                        </div>
+                      ))}
+                    </motion.div>
+                  </motion.div>
+                )}
+
+              {/* Other Sponsors Grid */}
+              {activeTab === "current" &&
+                searchTerm === "" &&
+                otherCurrentSponsors.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.8, delay: 0.8 }}
+                  >
+                    <h3 className="text-center text-2xl font-bold text-finance-gold mb-8">
+                      Partner Sponsors
+                    </h3>
+                    <motion.div
+                      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
+                      layout
+                    >
+                      {otherCurrentSponsors.map((sponsor, index) => (
+                        <SponsorCard
+                          key={sponsor.id}
+                          sponsor={sponsor}
+                          index={index}
+                        />
+                      ))}
+                    </motion.div>
+                  </motion.div>
+                )}
+
+              {/* Past Sponsors Grid or Filtered Results */}
+              {(activeTab === "past" || searchTerm !== "") &&
+                filteredSponsors.length > 0 && (
+                  <motion.div
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto"
+                    layout
+                  >
+                    {filteredSponsors.map((sponsor, index) => (
+                      <SponsorCard
+                        key={sponsor.id}
+                        sponsor={sponsor}
+                        index={index}
+                      />
+                    ))}
+                  </motion.div>
+                )}
+            </div>
           )}
 
           {filteredSponsors.length === 0 && searchTerm !== "" && (
