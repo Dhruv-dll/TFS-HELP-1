@@ -3,31 +3,6 @@ import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { getMarketData } from "./routes/marketData";
-import {
-  getEventsData,
-  updateEventsData,
-  checkEventsSync,
-} from "./routes/eventsData";
-import {
-  getSponsorsData,
-  updateSponsorsData,
-  checkSponsorsSync,
-} from "./routes/sponsorsData";
-import {
-  getLuminariesData,
-  updateLuminariesData,
-  checkLuminariesSync,
-} from "./routes/luminariesData";
-import {
-  getSessionsData,
-  updateSessionsData,
-  checkSessionsSync,
-} from "./routes/conclaveSessionsData";
-import {
-  getMagazinesData,
-  updateMagazinesData,
-  checkMagazinesSync,
-} from "./routes/finsightMagazinesData";
 
 export function createServer() {
   const app = express();
