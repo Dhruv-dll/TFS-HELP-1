@@ -96,11 +96,7 @@ export default function SponsorsSection() {
     isFirstAssociate?: boolean;
   }) => {
     const isLarge = size === "large";
-    const cardHeight = isLarge
-      ? isFirstAssociate
-        ? "h-96"
-        : "h-80"
-      : "h-64";
+    const cardHeight = isLarge ? "h-80" : "h-64";
     const logoSize = isLarge
       ? isFirstAssociate
         ? "w-80 h-40"
