@@ -63,19 +63,6 @@ export default function Index() {
     };
   }, []);
 
-  // Admin panel keyboard shortcut (Ctrl+Alt+A)
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.ctrlKey && event.altKey && event.key.toLowerCase() === "a") {
-        event.preventDefault();
-        console.log("🔐 Admin panel shortcut triggered");
-        setShowLoginPanel(true);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
 
   const aboutSections = [
     {
