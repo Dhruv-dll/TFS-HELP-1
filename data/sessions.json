@@ -1,4 +1,13 @@
 {
+  {
+  id: "YES";
+  name: "IDK KUMAR";
+  description?: "";
+  startTime?: "10:00 am";
+  endTime?: "11:30 am";
+  speakers: Speaker[];
+  createdAt: 1;
+}
   "sessions": [],
   "lastModified": 1757600810272
 }
