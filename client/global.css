@@ -488,6 +488,11 @@
 
 /* Mobile Performance Optimizations */
 @media (max-width: 640px) {
+  /* Ensure sessions and speakers are visible on mobile */
+  section {
+    min-height: auto !important;
+  }
+
   /* Disable expensive animations on mobile */
   .animate-float {
     animation: none !important;
@@ -535,6 +540,18 @@
 
   .text-4xl {
     font-size: 1.5rem;
+  }
+
+  /* Ensure conclave section is fully visible */
+  section#conclave {
+    min-height: auto;
+    overflow: visible;
+  }
+
+  /* Make sure cards don't get hidden */
+  [class*="grid"] > div {
+    min-height: auto;
+    display: block;
   }
 }
 
