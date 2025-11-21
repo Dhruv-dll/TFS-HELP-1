@@ -320,8 +320,10 @@ export default function AdminEventsPanel({
         linkedinId: newSpeaker.linkedinId,
         photo: newSpeaker.photo,
         bio: newSpeaker.bio,
+        startTime: newSpeaker.startTime,
+        endTime: newSpeaker.endTime,
       });
-      setNewSpeaker({ name: "", linkedinId: "", photo: "", bio: "" });
+      setNewSpeaker({ name: "", linkedinId: "", photo: "", bio: "", startTime: "", endTime: "" });
       alert("Speaker added successfully!");
     } else {
       alert("Please select a session and fill in speaker name and LinkedIn ID.");
