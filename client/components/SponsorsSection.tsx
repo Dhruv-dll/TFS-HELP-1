@@ -61,7 +61,7 @@ const sponsors: Sponsor[] = [
 export default function SponsorsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
-  const [activeTab, setActiveTab] = useState<"current" | "past">("past");
+  const [activeTab, setActiveTab] = useState<"current" | "past">("current");
   const [searchTerm, setSearchTerm] = useState("");
 
   // Dynamic data with fallback
@@ -77,6 +77,10 @@ export default function SponsorsSection() {
   ).filter((sponsor) =>
     sponsor.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
+
+  // Split current sponsors into associate (first 2) and others
+  const associateSponsors = currentSponsors.slice(0, 2);
+  const otherCurrentSponsors = currentSponsors.slice(2);
 
   const SponsorCard = ({
     sponsor,
